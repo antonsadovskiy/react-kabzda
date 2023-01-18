@@ -15,6 +15,7 @@ function App() {
             <Accordion titleValue={"Accordion 2"} collapsed={false}/>
             Article 2
             <Rating value={3}/>
+            <Rating value={5}/>
         </div>
     );
 }
