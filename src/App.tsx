@@ -9,7 +9,8 @@ function App() {
             <PageTitle title={"This is App component"}/>
             <PageTitle title={"This isn't App component"}/>
             Article 1
-            <Rating value={2}/>
+            <Rating value={5}/>
+            <Rating value={1}/>
             <Accordion titleValue={"Accordion 1"} collapsed={true}/>
             <Accordion titleValue={"Accordion 2"} collapsed={false}/>
             Article 2
