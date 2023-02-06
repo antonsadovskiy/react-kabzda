@@ -9,13 +9,13 @@ export function OnOff(props: OnOffPropsType) {
 
     return (
         <div className={s.container}>
-            <div className={s.blockOn} style={{background: (props.state)? 'green' : 'white'}}>
+            <div className={(props.state)? s.blockOn : s.block}>
                 on
             </div>
-            <div className={s.blockOff} style={{background: (!props.state)? 'red' : 'white'}}>
+            <div className={!(props.state)? s.blockOff : s.block}>
                 off
             </div>
-            <div className={s.lamp} style={{background: (props.state)? 'green' : 'red'}}>
+            <div className={(props.state)? s.lampOn : s.lampOff}>
 
             </div>
         </div>
