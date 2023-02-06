@@ -17,7 +17,6 @@ function App() {
 
             <OnOff state={true}/>
             <OnOff state={false}/>
-
         </div>
     );
 }

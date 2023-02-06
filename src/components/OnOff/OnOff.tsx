@@ -15,7 +15,7 @@ export function OnOff(props: OnOffPropsType) {
             <div className={!(props.state)? s.blockOff : s.block}>
                 off
             </div>
-            <div className={(props.state)? s.lampOn : s.lampOff}>
+            <div className={(props.state)? `${s.lampOn} ${s.lamp}` : `${s.lampOff} ${s.lamp}`}>
 
             </div>
         </div>
