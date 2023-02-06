@@ -1,21 +1,37 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from './OnOff.module.css'
 
 type OnOffPropsType = {
     state: boolean
 }
 
+type FilterType = 'on' | 'off'
+
 export function OnOff(props: OnOffPropsType) {
+
+    let [filter, setFilter] = useState<FilterType>('on')
+
+    const changeFilter = (value: FilterType) => {
+        setFilter(value)
+    }
+
+    let filteredState = props.state
+    if (filter === 'on'){
+        filteredState = true
+    }
+    if (filter === 'off'){
+        filteredState = false
+    }
 
     return (
         <div className={s.container}>
-            <div className={(props.state)? s.blockOn : s.block}>
+            <button className={(filteredState)? s.blockOn : s.block} onClick={ () => changeFilter('on') }>
                 on
-            </div>
-            <div className={!(props.state)? s.blockOff : s.block}>
+            </button>
+            <button className={!(filteredState)? s.blockOff : s.block} onClick={ () => changeFilter('off') }>
                 off
-            </div>
-            <div className={(props.state)? `${s.lampOn} ${s.lamp}` : `${s.lampOff} ${s.lamp}`}>
+            </button>
+            <div className={(filteredState)? `${s.lampOn} ${s.lamp}` : `${s.lampOff} ${s.lamp}`}>
 
             </div>
         </div>
