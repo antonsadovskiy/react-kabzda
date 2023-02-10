@@ -1,41 +1,62 @@
 import React, {useState} from 'react';
-import s from './OnOff.module.css'
 
-type OnOffPropsType = {
-    state: boolean
-}
+export function OnOff() {
 
-type FilterType = 'on' | 'off'
+    let [on, setOn] = useState<boolean>(false)
 
-export function OnOff(props: OnOffPropsType) {
-
-    let [filter, setFilter] = useState<FilterType>('on')
-
-    const changeFilter = (value: FilterType) => {
-        setFilter(value)
+    const changeFilter = (value: boolean) => {
+        setOn(value)
     }
 
-    let filteredState = props.state
-    if (filter === 'on'){
-        filteredState = true
+    const turnOn = () => {
+        changeFilter(true)
     }
-    if (filter === 'off'){
-        filteredState = false
+
+    const turnOff = () => {
+        changeFilter(false)
+    }
+
+    let container = {
+        display: "flex",
+        gap: "10px",
+    }
+    let turnOnStyle = {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "50px",
+        height: "20px",
+        border: "1px solid black",
+        backgroundColor: on? "green" : "white",
+    }
+    let turnOffStyle = {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "50px",
+        height: "20px",
+        border: "1px solid black",
+        backgroundColor: !on? "red" : "white"
+    }
+    let lampStyle = {
+        width: "20px",
+        height: "20px",
+        borderRadius: "50%",
+        backgroundColor: on? "green" : "red",
     }
 
     return (
-        <div className={s.container}>
-            <button className={(filteredState)? s.blockOn : s.block} onClick={ () => changeFilter('on') }>
+        <div style={container}>
+            <button style={turnOnStyle} onClick={turnOn}>
                 on
             </button>
-            <button className={!(filteredState)? s.blockOff : s.block} onClick={ () => changeFilter('off') }>
+            <button style={turnOffStyle} onClick={turnOff}>
                 off
             </button>
-            <div className={(filteredState)? `${s.lampOn} ${s.lamp}` : `${s.lampOff} ${s.lamp}`}>
-
+            <div style={lampStyle}>
             </div>
         </div>
     )
-};
+}
 
 export default OnOff;
