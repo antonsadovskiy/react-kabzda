@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-type RatingType =  0 | 1 | 2 | 3 | 4 | 5;
+export type RatingType =  0 | 1 | 2 | 3 | 4 | 5;
 
 export default function UnControlledRating() {
     console.log("Rating rendering")

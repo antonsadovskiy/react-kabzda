@@ -1,7 +1,9 @@
 import React from "react";
+import {RatingType} from "../UnControlledRating/UnControlledRating";
 
 type RatingPropsType = {
     value: 0 | 1 | 2 | 3 | 4 | 5;
+    changeRating: (value: RatingType) => void
 }
 
 export default function Rating(props: RatingPropsType) {
@@ -9,21 +11,27 @@ export default function Rating(props: RatingPropsType) {
 
     return (
         <div>
-            <Star selected={ props.value > 0 }/>
-            <Star selected={ props.value > 1 }/>
-            <Star selected={ props.value > 2 }/>
-            <Star selected={ props.value > 3 }/>
-            <Star selected={ props.value > 4 }/>
+            <Star selected={ props.value > 0 } callback={() => props.changeRating(1)} />
+            <Star selected={ props.value > 1 } callback={() => props.changeRating(2)} />
+            <Star selected={ props.value > 2 } callback={() => props.changeRating(3)} />
+            <Star selected={ props.value > 3 } callback={() => props.changeRating(4)} />
+            <Star selected={ props.value > 4 } callback={() => props.changeRating(5)} />
         </div>
     )
 }
 
 type StarPropsType = {
     selected: boolean;
+    callback: ()=>void
 }
 
 function Star(props: StarPropsType) {
     console.log("Star rendering")
-    return (props.selected)? <span><b> star </b></span> : <span> star </span>
+
+    const onClickHandler = () => {
+        props.callback()
+    }
+
+    return (props.selected)? <span onClick={onClickHandler}><b> star </b></span> : <span onClick={onClickHandler}> star </span>
 }
 

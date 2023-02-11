@@ -29,7 +29,12 @@ type AccordionTitlePropsType = {
 
 function AccordionTitle(props: AccordionTitlePropsType) {
     console.log("AccordionTitle rendering")
-    return <div onClick={() => props.toggleAccordion(!props.collapsed)}>{props.title}</div>
+
+    const onClickHandler = () => {
+        props.toggleAccordion(!props.collapsed)
+    }
+
+    return <div onClick={onClickHandler}>{props.title}</div>
 }
 
 function AccordionBody() {
