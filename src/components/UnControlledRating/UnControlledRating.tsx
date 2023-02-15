@@ -34,7 +34,6 @@ function Star(props: StarPropsType) {
         props.callback()
     }
 
-    return (props.selected)? <span onClick={onClickHandler}><b> star </b></span> :
-        <span onClick={onClickHandler}> star </span>
+    return <span onClick={onClickHandler}>{props.selected? <b> star </b> : " star "}</span>
 }
 

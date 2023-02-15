@@ -1,19 +1,17 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 
-export function OnOff() {
+type OnOffPropsType = {
+    filter: boolean
+    changeFilter: (value: boolean) => void
+}
 
-    let [on, setOn] = useState<boolean>(false)
+export function OnOff(props: OnOffPropsType) {
 
-    const changeFilter = (value: boolean) => {
-        setOn(value)
+    const setOn = () => {
+        props.changeFilter(true)
     }
-
-    const turnOn = () => {
-        changeFilter(true)
-    }
-
-    const turnOff = () => {
-        changeFilter(false)
+    const setOff = () => {
+        props.changeFilter(false)
     }
 
     let container = {
@@ -27,7 +25,7 @@ export function OnOff() {
         width: "50px",
         height: "20px",
         border: "1px solid black",
-        backgroundColor: on? "green" : "white",
+        backgroundColor: props.filter? "green" : "white",
     }
     let turnOffStyle = {
         display: "flex",
@@ -36,21 +34,21 @@ export function OnOff() {
         width: "50px",
         height: "20px",
         border: "1px solid black",
-        backgroundColor: !on? "red" : "white"
+        backgroundColor: !props.filter? "red" : "white"
     }
     let lampStyle = {
         width: "20px",
         height: "20px",
         borderRadius: "50%",
-        backgroundColor: on? "green" : "red",
+        backgroundColor:  props.filter? "green" : "red",
     }
 
     return (
         <div style={container}>
-            <button style={turnOnStyle} onClick={turnOn}>
+            <button style={turnOnStyle} onClick={setOn}>
                 on
             </button>
-            <button style={turnOffStyle} onClick={turnOff}>
+            <button style={turnOffStyle} onClick={setOff}>
                 off
             </button>
             <div style={lampStyle}>
@@ -58,5 +56,3 @@ export function OnOff() {
         </div>
     )
 }
-
-export default OnOff;

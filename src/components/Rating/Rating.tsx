@@ -2,7 +2,7 @@ import React from "react";
 import {RatingType} from "../UnControlledRating/UnControlledRating";
 
 type RatingPropsType = {
-    value: 0 | 1 | 2 | 3 | 4 | 5;
+    value: RatingType
     changeRating: (value: RatingType) => void
 }
 
@@ -32,6 +32,6 @@ function Star(props: StarPropsType) {
         props.callback()
     }
 
-    return (props.selected)? <span onClick={onClickHandler}><b> star </b></span> : <span onClick={onClickHandler}> star </span>
+    return <span onClick={onClickHandler}>{props.selected? <b> star </b> : " star "}</span>
 }
 
