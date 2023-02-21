@@ -6,7 +6,7 @@ type RatingPropsType = {
     changeRating: (value: RatingType) => void
 }
 
-export default function Rating(props: RatingPropsType) {
+export function Rating(props: RatingPropsType) {
     console.log("Rating rendering")
 
     return (

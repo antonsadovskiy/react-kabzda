@@ -20,15 +20,6 @@ export function UnControlledOnOff(props: UnControlledOnOffPropsType) {
         changeFilter(false)
         props.onChange(false)
     }
-
-    // const turnOn = () => {
-    //     changeFilter(true)
-    // }
-
-    // const turnOff = () => {
-    //     changeFilter(false)
-    // }
-
     let container = {
         display: "flex",
         gap: "10px",

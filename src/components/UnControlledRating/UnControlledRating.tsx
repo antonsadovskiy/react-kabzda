@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 export type RatingType =  0 | 1 | 2 | 3 | 4 | 5;
 
-export default function UnControlledRating() {
+export function UnControlledRating() {
     console.log("Rating rendering")
 
     const [rating, setRating] = useState<RatingType>(0)
