@@ -4,15 +4,23 @@ type AccordionPropsType = {
     titleValue: string;
     collapsed: boolean;
     changeCollapsed: () => void
+    data: Array<DataType>
+    onClick: (id: number) => void
+}
+
+export type DataType = {
+    id: number
+    name: string
 }
 
 function Accordion(props: AccordionPropsType) {
     console.log("UnControlledAccordion rendering")
 
+
     return (
         <div>
             <AccordionTitle title={props.titleValue} changeCollapsed={props.changeCollapsed}/>
-            { !props.collapsed && <AccordionBody/> }
+            {!props.collapsed && <AccordionBody data={props.data} onClick={props.onClick}/>}
         </div>
     )
 }
@@ -32,14 +40,20 @@ function AccordionTitle(props: AccordionTitlePropsType) {
     return <h3 onClick={onClickHandler}>{props.title}</h3>
 }
 
-function AccordionBody() {
+type AccordionBodyPropsType = {
+    data: Array<DataType>
+    onClick: (id: number) => void
+}
+
+function AccordionBody(props: AccordionBodyPropsType) {
     console.log("AccordionBody rendering")
+
     return (
         <div>
             <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
+                {props.data.map(item =>
+                    <li key={item.id} onClick={() => props.onClick(item.id)}>{item.name}</li>
+                )}
             </ul>
         </div>
     )

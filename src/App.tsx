@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import Accordion from "./components/Accordion/Accordion";
+import Accordion, {DataType} from "./components/Accordion/Accordion";
 import {Rating} from './components/Rating/Rating';
 import {UnControlledRating, RatingType} from "./components/UnControlledRating/UnControlledRating";
 import {UnControlledOnOff} from "./components/UnControlledOnOff/UnControlledOnOff";
@@ -23,6 +23,13 @@ function App() {
         setFilter(value)
     }
 
+    const onClicked = () => {
+        console.log('was clicked')
+    }
+
+    const data: Array<DataType> = [
+        {id: 1, name: "anton"}
+    ]
 
     return (
         <div className={"App"}>
@@ -30,12 +37,12 @@ function App() {
             {/*<Accordion titleValue={"UnControlledAccordion 1"} collapsed={true}/>*/}
 
             {/*<PageTitle title={"Second title"}/>*/}
-            <Accordion titleValue={"ControlledAccordion"} collapsed={collapsed} changeCollapsed={changeCollapsed}/>
-            <UnControlledAccordion titleValue={"UncontrolledAccordion"} />
-            <Rating value={rating} changeRating={changeRating}/>
-            <UnControlledRating />
+            <Accordion titleValue={"ControlledAccordion"} collapsed={collapsed} changeCollapsed={changeCollapsed} onClick={onClicked} data={data}/>
+            {/*<UnControlledAccordion titleValue={"UncontrolledAccordion"} />*/}
+            {/*<Rating value={rating} changeRating={changeRating}/>*/}
+            {/*<UnControlledRating />*/}
             {/*<OnOff filter={filter} changeFilter={changeFilter}/>*/}
-            <UnControlledOnOff onChange={setFilter}/> {filter.toString()}
+            {/*<UnControlledOnOff onChange={setFilter}/>*/}
         </div>
     );
 }

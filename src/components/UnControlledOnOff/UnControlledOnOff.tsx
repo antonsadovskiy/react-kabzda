@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 
 type UnControlledOnOffPropsType = {
-    onChange: (on: boolean) => void
+    onChange: (value: boolean) => void
+    defaultOn?: boolean
 }
 
 export function UnControlledOnOff(props: UnControlledOnOffPropsType) {
 
-    let [on, setOn] = useState<boolean>(false)
+    let [on, setOn] = useState<boolean>(props.defaultOn? props.defaultOn : false)
 
     const changeFilter = (value: boolean) => {
         setOn(value)
@@ -48,8 +49,6 @@ export function UnControlledOnOff(props: UnControlledOnOffPropsType) {
         borderRadius: "50%",
         backgroundColor: on? "green" : "red",
     }
-
-
 
     return (
         <div style={container}>

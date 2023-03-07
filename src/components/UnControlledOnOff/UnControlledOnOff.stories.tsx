@@ -7,8 +7,8 @@ export default {
     component: UnControlledOnOff,
 } ;
 
-export const UncontrolledOnOff = () => {
+const callback = action('clicked')
 
-    const [filter, setFilter] = useState<boolean>(false)
-    return <UnControlledOnOff onChange={() => setFilter(!filter)}/>
-}
+export const UncontrolledOnMode = () => <UnControlledOnOff defaultOn={true} onChange={callback}/>
+export const UncontrolledOffMode = () => <UnControlledOnOff defaultOn={false} onChange={callback}/>
+export const UncontrolledOnOff = () => <UnControlledOnOff onChange={callback}/>
