@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, KeyboardEvent, useEffect, useState} from 'react';
 import s from './Select.module.css'
 import arrayDown from '../../assets/SelectAssets/Arrow-down.png'
 import arrayUp from '../../assets/SelectAssets/Arrow-up.png'
@@ -7,63 +7,102 @@ export type ItemType = {
     id: number
     title: string
 }
-
 export type SelectPropsType = {
-    collapsed: boolean
-    setCollapsed: (value: boolean) => void
     items: ItemType[]
-    title: string
-    onChange: (newTitle: string) => void
+    selectedItem: ItemType
+    onChange: (itemId: number) => void
 }
-
-const Select:FC<SelectPropsType> = (props) => {
-
-    const onClickHandler = () => {
-        props.setCollapsed(!props.collapsed)
-    }
-    const setMainTitle = (id: number) => {
-        const newTitle = props.items.find(item => item.id === id)
-        if (newTitle){
-            props.onChange(newTitle.title)
-            props.setCollapsed(true)
-        }
-    }
-
-    const arrowType = props.collapsed? arrayDown: arrayUp
-
-    return (
-        <div className={s.selectContainer}>
-            <div className={s.selectItem}>
-                <h3 onClick={onClickHandler}>{props.title}</h3>
-                <img src={arrowType} alt="arrow"/>
-            </div>
-            {!props.collapsed && <SelectBody items={props.items} setMainTitle={setMainTitle}/>}
-        </div>
-    );
-};
-
 export type SelectBodyPropsType = {
     items: ItemType[]
     setMainTitle: (id: number) => void
+    selectedItem: ItemType
+    hoveredItem: ItemType
+    setHoveredItemHandler: (hoveredItem: ItemType) => void
 }
 
-const SelectBody:FC<SelectBodyPropsType> = (props) => {
 
-    const allItems = props.items.map(item => {
+const SelectSecret: FC<SelectPropsType> = (props) => {
 
-        const onClickHandler = () => {
-            props.setMainTitle(item.id)
+    const [collapsed, setCollapsed] = useState<boolean>(true)
+    const [hoveredItem, setHoveredItem] = useState<ItemType>(props.selectedItem)
+
+    useEffect(() => {
+        setHoveredItem(props.selectedItem)
+    }, [props.selectedItem])
+
+    const collapseItems = () => {
+        setCollapsed(!collapsed)
+    }
+    const setMainTitle = (itemId: number) => {
+        props.onChange(itemId)
+        setCollapsed(true)
+    }
+    const setHoveredItemHandler = (hoveredItem: ItemType) => {
+        setHoveredItem(hoveredItem)
+    }
+    const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+            for (let i = 0; i < props.items.length; i++) {
+                if (props.items[i].id === hoveredItem.id) {
+                    const nextElement = e.key === 'ArrowDown' ? props.items[i + 1] : props.items[i - 1]
+                    if (nextElement) {
+                        props.onChange(nextElement.id)
+                        return
+                    }
+                }
+            }
         }
-
-        return <li key={item.id} onClick={onClickHandler}>{item.title}</li>
+        if (e.key === 'Escape' || e.key === 'Enter'){
+            setCollapsed(true)
         }
-    )
+    }
+
+    const arrowType = collapsed ? arrayDown : arrayUp
 
     return (
-        <ul>
-            {allItems}
-        </ul>
+        <div className={s.selectContainer} onKeyUp={onKeyUpHandler} tabIndex={0}>
+            <div className={s.selectItem}>
+                <h3 onClick={collapseItems}>{props.selectedItem.title}</h3>
+                <img src={arrowType} alt="arrow"/>
+            </div>
+            <div>
+                {!collapsed && <SelectBody items={props.items}
+                                           setMainTitle={setMainTitle}
+                                           selectedItem={props.selectedItem}
+                                           hoveredItem={hoveredItem}
+                                           setHoveredItemHandler={setHoveredItemHandler}/>}
+            </div>
+        </div>
+    );
+};
+export const Select = React.memo(SelectSecret)
+
+const SelectBodySecret: FC<SelectBodyPropsType> = (props) => {
+
+    return (
+        <div className={s.items}>
+            {props.items.map(item => {
+
+                const onClickHandler = () => {
+                    props.setMainTitle(item.id)
+                }
+                const onMouseEnterHandler = () => {
+                    props.setHoveredItemHandler(item)
+                }
+
+                const itemClass = s.item + (props.hoveredItem.id === item.id ? ' ' + s.selectedItem : '')
+
+                return (
+                    <div
+                        key={item.id}
+                        onClick={onClickHandler}
+                        className={itemClass}
+                        onMouseEnter={onMouseEnterHandler}
+                    >
+                        {item.title}
+                    </div>)
+            })}
+        </div>
     )
 }
-
-export default Select;
+export const SelectBody = React.memo(SelectBodySecret)

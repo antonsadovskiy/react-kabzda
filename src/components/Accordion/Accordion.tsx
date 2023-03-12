@@ -7,15 +7,22 @@ type AccordionPropsType = {
     data: Array<DataType>
     onClick: (id: number) => void
 }
-
+type AccordionTitlePropsType = {
+    title: string;
+    changeCollapsed: () => void
+}
 export type DataType = {
     id: number
     name: string
 }
+type AccordionBodyPropsType = {
+    data: Array<DataType>
+    onClick: (id: number) => void
+}
 
-function Accordion(props: AccordionPropsType) {
+
+function AccordionSecret(props: AccordionPropsType) {
     console.log("UnControlledAccordion rendering")
-
 
     return (
         <div>
@@ -24,13 +31,10 @@ function Accordion(props: AccordionPropsType) {
         </div>
     )
 }
+export const Accordion = React.memo(AccordionSecret)
 
-type AccordionTitlePropsType = {
-    title: string;
-    changeCollapsed: () => void
-}
 
-function AccordionTitle(props: AccordionTitlePropsType) {
+function AccordionTitleSecret(props: AccordionTitlePropsType) {
     console.log("AccordionTitle rendering")
 
     const onClickHandler = () => {
@@ -39,13 +43,9 @@ function AccordionTitle(props: AccordionTitlePropsType) {
 
     return <h3 onClick={onClickHandler}>{props.title}</h3>
 }
+export const AccordionTitle = React.memo(AccordionTitleSecret)
 
-type AccordionBodyPropsType = {
-    data: Array<DataType>
-    onClick: (id: number) => void
-}
-
-function AccordionBody(props: AccordionBodyPropsType) {
+function AccordionBodySecret(props: AccordionBodyPropsType) {
     console.log("AccordionBody rendering")
 
     return (
@@ -58,5 +58,4 @@ function AccordionBody(props: AccordionBodyPropsType) {
         </div>
     )
 }
-
-export default Accordion;
+export const AccordionBody = React.memo(AccordionBodySecret)

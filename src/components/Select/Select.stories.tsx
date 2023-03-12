@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import Select, {ItemType} from "./Select";
-import UnControlledSelect from "../UncontrolledSelect/UncontrolledSelect";
+import {Select, ItemType} from "./Select";
+import {UncontrolledSelect} from "../UncontrolledSelect/UncontrolledSelect";
 
 export default {
     title: 'Select',
@@ -8,30 +8,33 @@ export default {
 };
 
 export const ControlledSelect = () => {
+
+    const [selectedItem, setSelectedItem] = useState<ItemType>({id: 1, title: 'React'})
+
     const items: Array<ItemType> = [
         {id: 1, title: 'React'},
         {id: 2, title: 'TypeScript'},
         {id: 3, title: 'Redux'},
         {id: 4, title: 'StoryBook'},
     ]
-    const [title, setTitle] = useState<string>('none')
-    const [collapsed, setCollapsed] = useState<boolean>(true)
 
-    const onChangeHandler = (newTitle: string) => {
-        setTitle(newTitle)
+
+    const onChangeHandler = (itemId: number) => {
+        const newSelectedItem  = items.find(item => item.id === itemId)
+        if (newSelectedItem){
+            setSelectedItem(newSelectedItem)
+        }
     }
 
     return (
-        <Select collapsed={collapsed}
-                setCollapsed={setCollapsed}
-                items={items}
-                title={title}
-                onChange={onChangeHandler}/>
+            <Select items={items}
+                    selectedItem={selectedItem}
+                    onChange={onChangeHandler}/>
     )
 
 }
 
-export const UncontrolledSelect = () => {
+export const UnControlledSelect = () => {
     const items: Array<ItemType> = [
         {id: 1, title: 'React'},
         {id: 2, title: 'TypeScript'},
@@ -40,7 +43,7 @@ export const UncontrolledSelect = () => {
     ]
 
     return (
-        <UnControlledSelect items={items}/>
+        <UncontrolledSelect items={items} />
     )
 
 }

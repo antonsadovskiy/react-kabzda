@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {action} from "@storybook/addon-actions";
-import Accordion, {DataType} from "./Accordion";
+import {Accordion , DataType} from "./Accordion";
 
 export default {
     title: 'Accordion',

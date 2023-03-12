@@ -5,7 +5,7 @@ type OnOffPropsType = {
     changeFilter: (value: boolean) => void
 }
 
-export function OnOff(props: OnOffPropsType) {
+function OnOffSecret(props: OnOffPropsType) {
 
     const setOn = () => {
         props.changeFilter(true)
@@ -56,3 +56,5 @@ export function OnOff(props: OnOffPropsType) {
         </div>
     )
 }
+
+export const OnOff = React.memo(OnOffSecret)

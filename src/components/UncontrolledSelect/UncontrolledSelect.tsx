@@ -7,12 +7,15 @@ export type ItemType = {
     id: number
     title: string
 }
-
 export type UncontrolledSelectPropsType = {
     items: ItemType[]
 }
+export type UncontrolledSelectBodyPropsType = {
+    items: ItemType[]
+    setMainTitle: (id: number) => void
+}
 
-const UncontrolledSelect:FC<UncontrolledSelectPropsType> = (props) => {
+const UncontrolledSelectSecret:FC<UncontrolledSelectPropsType> = (props) => {
 
     const [title, setTitle] = useState<string>('none')
     const [collapsed, setCollapsed] = useState<boolean>(true)
@@ -40,13 +43,9 @@ const UncontrolledSelect:FC<UncontrolledSelectPropsType> = (props) => {
         </div>
     );
 };
+export const UncontrolledSelect = React.memo(UncontrolledSelectSecret)
 
-export type UncontrolledSelectBodyPropsType = {
-    items: ItemType[]
-    setMainTitle: (id: number) => void
-}
-
-const SelectBody:FC<UncontrolledSelectBodyPropsType> = (props) => {
+const SelectBodySecret:FC<UncontrolledSelectBodyPropsType> = (props) => {
 
     const allItems = props.items.map(item => {
 
@@ -64,5 +63,4 @@ const SelectBody:FC<UncontrolledSelectBodyPropsType> = (props) => {
         </ul>
     )
 };
-
-export default UncontrolledSelect;
+export const SelectBody = React.memo(SelectBodySecret)
