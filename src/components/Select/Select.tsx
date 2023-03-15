@@ -2,29 +2,30 @@ import React, {FC, KeyboardEvent, useEffect, useState} from 'react';
 import s from './Select.module.css'
 import arrayDown from '../../assets/SelectAssets/Arrow-down.png'
 import arrayUp from '../../assets/SelectAssets/Arrow-up.png'
+import {CityType} from "../../stories/helpsExample.stories";
 
 export type ItemType = {
     id: number
     title: string
 }
 export type SelectPropsType = {
-    items: ItemType[]
-    selectedItem: ItemType
+    items: CityType[]
+    selectedItem: CityType
     onChange: (itemId: number) => void
 }
 export type SelectBodyPropsType = {
-    items: ItemType[]
+    items: CityType[]
     setMainTitle: (id: number) => void
-    selectedItem: ItemType
-    hoveredItem: ItemType
-    setHoveredItemHandler: (hoveredItem: ItemType) => void
+    selectedItem: CityType
+    hoveredItem: CityType
+    setHoveredItemHandler: (hoveredItem: CityType) => void
 }
 
 
 const SelectSecret: FC<SelectPropsType> = (props) => {
 
     const [collapsed, setCollapsed] = useState<boolean>(true)
-    const [hoveredItem, setHoveredItem] = useState<ItemType>(props.selectedItem)
+    const [hoveredItem, setHoveredItem] = useState<CityType>(props.selectedItem)
 
     useEffect(() => {
         setHoveredItem(props.selectedItem)
@@ -37,16 +38,16 @@ const SelectSecret: FC<SelectPropsType> = (props) => {
         props.onChange(itemId)
         setCollapsed(true)
     }
-    const setHoveredItemHandler = (hoveredItem: ItemType) => {
+    const setHoveredItemHandler = (hoveredItem: CityType) => {
         setHoveredItem(hoveredItem)
     }
     const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'ArrowDown' || e.key === 'ArrowUp'){
             for (let i = 0; i < props.items.length; i++) {
-                if (props.items[i].id === hoveredItem.id) {
+                if (props.items[i].cityId === hoveredItem.cityId) {
                     const nextElement = e.key === 'ArrowDown' ? props.items[i + 1] : props.items[i - 1]
                     if (nextElement) {
-                        props.onChange(nextElement.id)
+                        props.onChange(nextElement.cityId)
                         return
                     }
                 }
@@ -84,17 +85,17 @@ const SelectBodySecret: FC<SelectBodyPropsType> = (props) => {
             {props.items.map(item => {
 
                 const onClickHandler = () => {
-                    props.setMainTitle(item.id)
+                    props.setMainTitle(item.cityId)
                 }
                 const onMouseEnterHandler = () => {
                     props.setHoveredItemHandler(item)
                 }
 
-                const itemClass = s.item + (props.hoveredItem.id === item.id ? ' ' + s.selectedItem : '')
+                const itemClass = s.item + (props.hoveredItem.cityId === item.cityId ? ' ' + s.selectedItem : '')
 
                 return (
                     <div
-                        key={item.id}
+                        key={item.cityId}
                         onClick={onClickHandler}
                         className={itemClass}
                         onMouseEnter={onMouseEnterHandler}

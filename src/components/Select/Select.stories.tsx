@@ -43,7 +43,8 @@ export const UnControlledSelect = () => {
     ]
 
     return (
-        <UncontrolledSelect items={items} />
+        // <UncontrolledSelect items={items} />
+        <div></div>
     )
 
 }
